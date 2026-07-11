@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soan Ganga Coal Mining Pvt. Ltd.</title>
+    <style>
+        /* COLOR PALETTE & SYSTEM */
+        body {
+            background-color: #12161A; /* Dark Mode Canvas */
+            color: #ECEFF1; /* Soft Pastel Text */
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            border-bottom: 2px solid #CCFF00; /* Neon Accent */
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #1A2026 0%, #12161A 100%);
+        }
+
+        h1 { color: #FFFFFF; margin: 0; font-size: 2.5rem; }
+        h2 { color: #FFFFFF; border-bottom: 1px solid #2C353F; padding-bottom: 10px; margin-top: 40px;}
+        .highlight { color: #CCFF00; }
+        .partner { color: #FF5E00; font-weight: bold; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        /* LEADERSHIP SECTION */
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .leader-card {
+            background-color: #1A2026;
+            border-left: 4px solid #CCFF00;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        .leader-title { color: #90A4AE; font-size: 0.9rem; text-transform: uppercase; }
+        .leader-name { font-size: 1.5rem; font-weight: bold; margin-top: 5px; }
+
+        /* LIVE STATS DASHBOARD */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        .stat-card {
+            background-color: #1A2026;
+            border: 1px solid #2C353F;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-number { font-size: 2rem; font-weight: bold; color: #CCFF00; }
+        .stat-label { font-size: 0.85rem; text-transform: uppercase; color: #90A4AE; }
+
+        /* ORDERS TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1A2026;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #2C353F;
+        }
+        th { background-color: #12161A; color: #FF5E00; text-transform: uppercase; font-size: 0.9rem; }
+
+        /* MANUAL CONTROL PANEL (SECRET BOX) */
+        .admin-panel {
+            background-color: #1C1A1A;
+            border: 2px dashed #FF5E00;
+            padding: 30px;
+            margin-top: 60px;
+            border-radius: 8px;
+        }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .admin-group { display: flex; flex-direction: column; }
+        label { font-size: 0.85rem; color: #90A4AE; margin-bottom: 5px; }
+        input, select {
+            background-color: #12161A;
+            border: 1px solid #2C353F;
+            color: #FFF;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        input:focus { border-color: #CCFF00; outline: none; }
+        button {
+            background-color: #CCFF00;
+            color: #12161A;
+            font-weight: bold;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        button:hover { background-color: #E6FF66; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Soan Ganga Coal Mining <span class="highlight">Pvt. Ltd.</span></h1>
+        <p>Strategic Partner of <span class="partner">NCC Pvt. Ltd.</span> | Magadh & Amrapali Operations</p>
+    </header>
+
+    <div class="container">
+        
+        <h2>Company Leadership</h2>
+        <div class="leadership-grid">
+            <div class="leader-card">
+                <div class="leader-title">Company Owner / Managing Director</div>
+                <div class="leader-name" id="display-owner">Click Admin Panel to Set Owner</div>
+            </div>
+            <div class="leader-card" style="border-left-color: #FF5E00;">
+                <div class="leader-title">Company Co-Owner / Director</div>
+                <div class="leader-name" id="display-coowner">Click Admin Panel to Set Co-Owner</div>
+            </div>
+        </div>
+
+        <h2>Live Operations</h2>
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="display-trucks">120</div>
+                <div class="stat-label">Active Trucks</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="display-employees">450</div>
+                <div class="stat-label">Total Staff</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="display-guards">45</div>
+                <div class="stat-label">Security Guards</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="display-revenue">₹4.2 Cr</div>
+                <div class="stat-label">Project Revenue</div>
+            </div>
+        </div>
+
+        <h2>Active Orders & Material Weight</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Destination/Client</th>
+                    <th>Total Weight (Tons)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="order-table-body">
+                <tr>
+                    <td>#SG-9821</td>
+                    <td>Magadh Dispatch Facility</td>
+                    <td>4,200 Tons</td>
+                    <td style="color: #CCFF00;">In Transit</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="admin-panel">
+            <h3 style="color: #FF5E00; margin-top:0;">🛠️ Live Manual Control Center (Internal Use Only)</h3>
+            <p style="font-size:0.85rem; color:#90A4AE;">Use this section to manually update numbers, names, and orders live on your screen.</p>
+            
+            <div class="admin-grid">
+                <div class="admin-group">
+                    <label>Owner Name</label>
+                    <input type="text" id="input-owner" value="Rajesh Kumar">
+                </div>
+                <div class="admin-group">
+                    <label>Co-Owner Name</label>
+                    <input type="text" id="input-coowner" value="Amit Singh">
+                </div>
+                <div class="admin-group">
+                    <label>Trucks Count</label>
+                    <input type="number" id="input-trucks" value="145">
+                </div>
+                <div class="admin-group">
+                    <label>Guard Count</label>
+                    <input type="number" id="input-guards" value="55">
+                </div>
+            </div>
+
+            <h4 style="color:#CCFF00; margin-bottom:5px; margin-top:20px;">Add A New Cargo Order</h4>
+            <div class="admin-grid">
+                <div class="admin-group">
+                    <label>Order ID / Slip No.</label>
+                    <input type="text" id="input-orderid" placeholder="e.g., #SG-5511">
+                </div>
+                <div class="admin-group">
+                    <label>Destination / Area</label>
+                    <input type="text" id="input-dest" placeholder="e.g., Amrapali Sector 3">
+                </div>
+                <div class="admin-group">
+                    <label>Net Weight (Tons)</label>
+                    <input type="text" id="input-weight" placeholder="e.g., 3,500">
+                </div>
+            </div>
+            
+            <button onclick="updateWebsiteDashboard()">Apply Updates & Push Live</button>
+        </div>
+
+    </div>
+
+    <script>
+        function updateWebsiteDashboard() {
+            // Update Leadership names manually
+            document.getElementById('display-owner').innerText = document.getElementById('input-owner').value;
+            document.getElementById('display-coowner').innerText = document.getElementById('input-coowner').value;
+            
+            // Update counters manually
+            document.getElementById('display-trucks').innerText = document.getElementById('input-trucks').value;
+            document.getElementById('display-guards').innerText = document.getElementById('input-guards').value;
+
+            // Grab order info and manually add a row to the table
+            let orderId = document.getElementById('input-orderid').value;
+            let destination = document.getElementById('input-dest').value;
+            let weight = document.getElementById('input-weight').value;
+
+            if(orderId && destination && weight) {
+                let table = document.getElementById('order-table-body');
+                let newRow = table.insertRow(0); // Insert at the top of the table
+                newRow.innerHTML = `<td>${orderId}</td><td>${destination}</td><td>${weight} Tons</td><td style="color: #CCFF00;">Dispatched</td>`;
+                
+                // Clear the entry forms after posting
+                document.getElementById('input-orderid').value = '';
+                document.getElementById('input-dest').value = '';
+                document.getElementById('input-weight').value = '';
+            }
+            
+            alert("Dashboard manual updates pushed successfully!");
+        }
+
+        // Initialize display on load
+        window.onload = function() { updateWebsiteDashboard(); };
+    </script>
+</body>
+</html>
