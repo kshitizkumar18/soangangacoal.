@@ -75,7 +75,7 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody id="order-table-body">
+            <tbody>
                 <tr>
                     <td id="display-orderid">...</td>
                     <td id="display-dest">...</td>
@@ -87,27 +87,29 @@
     </div>
 
     <script>
+        // Ye naya system bina publish kiye bhi data nikal leta hai
         const SHEET_ID = '1BRRdTT4vjZDFlta_kWGCQZLVe29I0ggWWd3TmqWYTu4'; 
-        const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv`;
+        const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
         async function fetchLiveSheetData() {
             try {
-                const response = await fetch(CSV_URL);
-                const data = await response.text();
+                const response = await fetch(URL);
+                const text = await response.text();
                 
-                let lines = data.split("\n");
+                // Google JSON data clean up
+                const cleanJson = JSON.parse(text.substring(47).slice(0, -2));
+                const rows = cleanJson.table.rows;
+                
                 let dataMap = {};
-                
-                lines.forEach(line => {
-                    let parts = line.split(",");
-                    if(parts[0] && parts[1]) {
-                        let key = parts[0].replace(/"/g, "").toLowerCase().trim();
-                        let val = parts[1].replace(/"/g, "").trim();
-                        dataMap[key] = val;
+                rows.forEach(row => {
+                    if (row.c && row.c[0] && row.c[1]) {
+                        let key = row.c[0].v ? row.c[0].v.toString().toLowerCase().trim() : '';
+                        let val = row.c[1].v ? row.c[1].v.toString().trim() : '';
+                        if(key) dataMap[key] = val;
                     }
                 });
 
-                // Stats Dashboard Data
+                // Display Data on Web
                 document.getElementById('display-owner').innerText = dataMap['owner'] || 'N/A';
                 document.getElementById('display-coowner').innerText = dataMap['coowner'] || 'N/A';
                 document.getElementById('display-trucks').innerText = dataMap['trucks'] || '0';
@@ -115,13 +117,12 @@
                 document.getElementById('display-revenue').innerText = dataMap['revenue'] || '₹0';
                 document.getElementById('display-guards').innerText = dataMap['guards'] || '0';
 
-                // Orders Table Data
                 document.getElementById('display-orderid').innerText = dataMap['orderid'] || 'N/A';
                 document.getElementById('display-dest').innerText = dataMap['destination'] || 'N/A';
                 document.getElementById('display-weight').innerText = dataMap['weight'] || 'N/A';
 
             } catch (error) {
-                console.error("Error loading data:", error);
+                console.error("Connection Error:", error);
             }
         }
 
