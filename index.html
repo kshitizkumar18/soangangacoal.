@@ -58,6 +58,20 @@
         .stat-number { font-size: 2rem; font-weight: bold; color: #CCFF00; }
         .stat-label { font-size: 0.85rem; text-transform: uppercase; color: #90A4AE; }
 
+        /* ORDERS TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1A2026;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #2C353F;
+        }
+        th { background-color: #12161A; color: #FF5E00; text-transform: uppercase; font-size: 0.9rem; }
+
         /* MANUAL CONTROL PANEL (SECRET BOX) */
         .admin-panel {
             background-color: #1C1A1A;
@@ -136,9 +150,23 @@
             </div>
         </div>
 
+        <h2>Active Orders & Material Weight</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID / Slip No.</th>
+                    <th>Destination / Client</th>
+                    <th>Total Weight</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="order-table-body">
+                </tbody>
+        </table>
+
         <div class="admin-panel">
             <h3 style="color: #FF5E00; margin-top:0;">🛠️ Live Manual Control Center (Internal Use Only)</h3>
-            <p style="font-size:0.85rem; color:#90A4AE;">Type your data below and click Save. It will remember your numbers even if you refresh!</p>
+            <p style="font-size:0.85rem; color:#90A4AE;">Type your operational figures here to change the values live on your screen.</p>
             
             <div class="admin-grid">
                 <div class="admin-group">
@@ -159,11 +187,27 @@
                 </div>
                 <div class="admin-group">
                     <label>Project Revenue</label>
-                    <input type="text" id="input-revenue" placeholder="e.g., ₹4.2 Cr">
+                    <input type="text" id="input-revenue">
                 </div>
                 <div class="admin-group">
                     <label>Guard Count</label>
                     <input type="text" id="input-guards">
+                </div>
+            </div>
+
+            <h4 style="color:#CCFF00; margin-bottom:5px; margin-top:25px;">Dispatch New Cargo Order</h4>
+            <div class="admin-grid">
+                <div class="admin-group">
+                    <label>Order ID</label>
+                    <input type="text" id="input-orderid" placeholder="e.g., #SG-9821">
+                </div>
+                <div class="admin-group">
+                    <label>Destination / Area</label>
+                    <input type="text" id="input-dest" placeholder="e.g., Magadh Dispatch">
+                </div>
+                <div class="admin-group">
+                    <label>Net Weight (Tons)</label>
+                    <input type="text" id="input-weight" placeholder="e.g., 4,200 Tons">
                 </div>
             </div>
             
@@ -174,6 +218,7 @@
 
     <script>
         function saveDashboardData() {
+            // Save core fields
             localStorage.setItem('owner', document.getElementById('input-owner').value);
             localStorage.setItem('coowner', document.getElementById('input-coowner').value);
             localStorage.setItem('trucks', document.getElementById('input-trucks').value);
@@ -181,11 +226,31 @@
             localStorage.setItem('revenue', document.getElementById('input-revenue').value);
             localStorage.setItem('guards', document.getElementById('input-guards').value);
             
+            // Check if user is adding a new order row
+            let orderId = document.getElementById('input-orderid').value;
+            let dest = document.getElementById('input-dest').value;
+            let weight = document.getElementById('input-weight').value;
+
+            if (orderId && dest && weight) {
+                // Fetch existing orders array or make empty one
+                let existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+                // Put new order data inside list
+                existingOrders.unshift({ id: orderId, destination: dest, cargoWeight: weight });
+                // Resave lists
+                localStorage.setItem('orders', JSON.stringify(existingOrders));
+                
+                // Clear the entry forms
+                document.getElementById('input-orderid').value = '';
+                document.getElementById('input-dest').value = '';
+                document.getElementById('input-weight').value = '';
+            }
+
             loadDashboardData();
-            alert("Changes saved to memory!");
+            alert("All values updated successfully!");
         }
 
         function loadDashboardData() {
+            // Load core stats
             let owner = localStorage.getItem('owner') || "Rajesh Kumar";
             let coowner = localStorage.getItem('coowner') || "Amit Singh";
             let trucks = localStorage.getItem('trucks') || "120";
@@ -206,6 +271,19 @@
             document.getElementById('input-employees').value = employees;
             document.getElementById('input-revenue').value = revenue;
             document.getElementById('input-guards').value = guards;
+
+            // Load and build the order logs table rows
+            let orderTableBody = document.getElementById('order-table-body');
+            orderTableBody.innerHTML = ""; // Clear table row layout
+            
+            let ordersList = JSON.parse(localStorage.getItem('orders')) || [
+                { id: "#SG-101", destination: "Magadh Sector 2", cargoWeight: "3,500 Tons" }
+            ];
+
+            ordersList.forEach(order => {
+                let row = orderTableBody.insertRow();
+                row.innerHTML = `<td>${order.id}</td><td>${order.destination}</td><td>${order.cargoWeight}</td><td style="color: #CCFF00;">In Transit</td>`;
+            });
         }
 
         window.onload = loadDashboardData;
