@@ -5,108 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soan Ganga Coal Mining Pvt. Ltd.</title>
     <style>
-        /* COLOR PALETTE & SYSTEM */
-        body {
-            background-color: #12161A; 
-            color: #ECEFF1; 
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            border-bottom: 2px solid #CCFF00; 
-            padding: 40px 20px;
-            text-align: center;
-            background: linear-gradient(180deg, #1A2026 0%, #12161A 100%);
-        }
-
+        body { background-color: #12161A; color: #ECEFF1; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; }
+        header { border-bottom: 2px solid #CCFF00; padding: 40px 20px; text-align: center; background: linear-gradient(180deg, #1A2026 0%, #12161A 100%); }
         h1 { color: #FFFFFF; margin: 0; font-size: 2.5rem; }
         h2 { color: #FFFFFF; border-bottom: 1px solid #2C353F; padding-bottom: 10px; margin-top: 40px;}
         .highlight { color: #CCFF00; }
         .partner { color: #FF5E00; font-weight: bold; }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-        /* LEADERSHIP SECTION */
-        .leadership-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .leader-card {
-            background-color: #1A2026;
-            border-left: 4px solid #CCFF00;
-            padding: 20px;
-            border-radius: 4px;
-        }
+        .leadership-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .leader-card { background-color: #1A2026; border-left: 4px solid #CCFF00; padding: 20px; border-radius: 4px; }
         .leader-title { color: #90A4AE; font-size: 0.9rem; text-transform: uppercase; }
         .leader-name { font-size: 1.5rem; font-weight: bold; margin-top: 5px; }
-
-        /* LIVE STATS DASHBOARD */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-        }
-        .stat-card {
-            background-color: #1A2026;
-            border: 1px solid #2C353F;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-        }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+        .stat-card { background-color: #1A2026; border: 1px solid #2C353F; border-radius: 8px; padding: 20px; text-align: center; }
         .stat-number { font-size: 2rem; font-weight: bold; color: #CCFF00; }
         .stat-label { font-size: 0.85rem; text-transform: uppercase; color: #90A4AE; }
-
-        /* ORDERS TABLE */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #1A2026;
-            margin-top: 15px;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #2C353F;
-        }
-        th { background-color: #12161A; color: #FF5E00; text-transform: uppercase; font-size: 0.9rem; }
-
-        /* MANUAL CONTROL PANEL (SECRET BOX) */
-        .admin-panel {
-            background-color: #1C1A1A;
-            border: 2px dashed #FF5E00;
-            padding: 30px;
-            margin-top: 60px;
-            border-radius: 8px;
-        }
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        .admin-group { display: flex; flex-direction: column; }
-        label { font-size: 0.85rem; color: #90A4AE; margin-bottom: 5px; }
-        input {
-            background-color: #12161A;
-            border: 1px solid #2C353F;
-            color: #FFF;
-            padding: 10px;
-            border-radius: 4px;
-        }
-        input:focus { border-color: #CCFF00; outline: none; }
-        button {
-            background-color: #CCFF00;
-            color: #12161A;
-            font-weight: bold;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-top: 15px;
-        }
-        button:hover { background-color: #E6FF66; }
     </style>
 </head>
 <body>
@@ -117,7 +30,6 @@
     </header>
 
     <div class="container">
-        
         <h2>Company Leadership</h2>
         <div class="leadership-grid">
             <div class="leader-card">
@@ -133,160 +45,57 @@
         <h2>Live Operations</h2>
         <div class="dashboard-grid">
             <div class="stat-card">
-                <div class="stat-number" id="display-trucks">0</div>
+                <div class="stat-number" id="display-trucks">...</div>
                 <div class="stat-label">Active Trucks</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="display-employees">0</div>
+                <div class="stat-number" id="display-employees">...</div>
                 <div class="stat-label">Total Staff</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="display-revenue">₹0</div>
+                <div class="stat-number" id="display-revenue">...</div>
                 <div class="stat-label">Project Revenue</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="display-guards">0</div>
+                <div class="stat-number" id="display-guards">...</div>
                 <div class="stat-label">Security Guards</div>
             </div>
         </div>
-
-        <h2>Active Orders & Material Weight</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Order ID / Slip No.</th>
-                    <th>Destination / Client</th>
-                    <th>Total Weight</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="order-table-body">
-                </tbody>
-        </table>
-
-        <div class="admin-panel">
-            <h3 style="color: #FF5E00; margin-top:0;">🛠️ Live Manual Control Center (Internal Use Only)</h3>
-            <p style="font-size:0.85rem; color:#90A4AE;">Type your operational figures here to change the values live on your screen.</p>
-            
-            <div class="admin-grid">
-                <div class="admin-group">
-                    <label>Owner Name</label>
-                    <input type="text" id="input-owner">
-                </div>
-                <div class="admin-group">
-                    <label>Co-Owner Name</label>
-                    <input type="text" id="input-coowner">
-                </div>
-                <div class="admin-group">
-                    <label>Trucks Count</label>
-                    <input type="text" id="input-trucks">
-                </div>
-                <div class="admin-group">
-                    <label>Total Staff</label>
-                    <input type="text" id="input-employees">
-                </div>
-                <div class="admin-group">
-                    <label>Project Revenue</label>
-                    <input type="text" id="input-revenue">
-                </div>
-                <div class="admin-group">
-                    <label>Guard Count</label>
-                    <input type="text" id="input-guards">
-                </div>
-            </div>
-
-            <h4 style="color:#CCFF00; margin-bottom:5px; margin-top:25px;">Dispatch New Cargo Order</h4>
-            <div class="admin-grid">
-                <div class="admin-group">
-                    <label>Order ID</label>
-                    <input type="text" id="input-orderid" placeholder="e.g., #SG-9821">
-                </div>
-                <div class="admin-group">
-                    <label>Destination / Area</label>
-                    <input type="text" id="input-dest" placeholder="e.g., Magadh Dispatch">
-                </div>
-                <div class="admin-group">
-                    <label>Net Weight (Tons)</label>
-                    <input type="text" id="input-weight" placeholder="e.g., 4,200 Tons">
-                </div>
-            </div>
-            
-            <button onclick="saveDashboardData()">Apply Updates & Save Permanently</button>
-        </div>
-
     </div>
 
     <script>
-        function saveDashboardData() {
-            // Save core fields
-            localStorage.setItem('owner', document.getElementById('input-owner').value);
-            localStorage.setItem('coowner', document.getElementById('input-coowner').value);
-            localStorage.setItem('trucks', document.getElementById('input-trucks').value);
-            localStorage.setItem('employees', document.getElementById('input-employees').value);
-            localStorage.setItem('revenue', document.getElementById('input-revenue').value);
-            localStorage.setItem('guards', document.getElementById('input-guards').value);
-            
-            // Check if user is adding a new order row
-            let orderId = document.getElementById('input-orderid').value;
-            let dest = document.getElementById('input-dest').value;
-            let weight = document.getElementById('input-weight').value;
+        // ⚠️ APNI GOOGLE SHEET ID YAHAN PASTE KAREIN
+        const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE'; 
+        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
-            if (orderId && dest && weight) {
-                // Fetch existing orders array or make empty one
-                let existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
-                // Put new order data inside list
-                existingOrders.unshift({ id: orderId, destination: dest, cargoWeight: weight });
-                // Resave lists
-                localStorage.setItem('orders', JSON.stringify(existingOrders));
-                
-                // Clear the entry forms
-                document.getElementById('input-orderid').value = '';
-                document.getElementById('input-dest').value = '';
-                document.getElementById('input-weight').value = '';
+        async function fetchLiveSheetData() {
+            try {
+                const response = await fetch(SHEET_URL);
+                const text = await response.text();
+                // Google Sheet ka JSON data clean karne ke liye
+                const jsonData = JSON.parse(text.substr(47).slice(0, -2));
+                const rows = const SHEET_ID = '1BRRdTT4vjZDFlta_kWGCQZLVe29I0ggWWd3TmqWYTu4';
+                // Data ko website par load karne ka logic
+                let dataMap = {};
+                rows.forEach(row => {
+                    if (row.c[0] && row.c[1]) {
+                        dataMap[row.c[0].v.toLowerCase().trim()] = row.c[1].v;
+                    }
+                });
+
+                document.getElementById('display-owner').innerText = dataMap['owner'] || 'N/A';
+                document.getElementById('display-coowner').innerText = dataMap['coowner'] || 'N/A';
+                document.getElementById('display-trucks').innerText = dataMap['trucks'] || '0';
+                document.getElementById('display-employees').innerText = dataMap['employees'] || '0';
+                document.getElementById('display-revenue').innerText = dataMap['revenue'] || '₹0';
+                document.getElementById('display-guards').innerText = dataMap['guards'] || '0';
+
+            } catch (error) {
+                console.error("Error loading data from Google Sheet:", error);
             }
-
-            loadDashboardData();
-            alert("All values updated successfully!");
         }
 
-        function loadDashboardData() {
-            // Load core stats
-            let owner = localStorage.getItem('owner') || "Rajesh Kumar";
-            let coowner = localStorage.getItem('coowner') || "Amit Singh";
-            let trucks = localStorage.getItem('trucks') || "120";
-            let employees = localStorage.getItem('employees') || "450";
-            let revenue = localStorage.getItem('revenue') || "₹4.2 Cr";
-            let guards = localStorage.getItem('guards') || "45";
-
-            document.getElementById('display-owner').innerText = owner;
-            document.getElementById('display-coowner').innerText = coowner;
-            document.getElementById('display-trucks').innerText = trucks;
-            document.getElementById('display-employees').innerText = employees;
-            document.getElementById('display-revenue').innerText = revenue;
-            document.getElementById('display-guards').innerText = guards;
-
-            document.getElementById('input-owner').value = owner;
-            document.getElementById('input-coowner').value = coowner;
-            document.getElementById('input-trucks').value = trucks;
-            document.getElementById('input-employees').value = employees;
-            document.getElementById('input-revenue').value = revenue;
-            document.getElementById('input-guards').value = guards;
-
-            // Load and build the order logs table rows
-            let orderTableBody = document.getElementById('order-table-body');
-            orderTableBody.innerHTML = ""; // Clear table row layout
-            
-            let ordersList = JSON.parse(localStorage.getItem('orders')) || [
-                { id: "#SG-101", destination: "Magadh Sector 2", cargoWeight: "3,500 Tons" }
-            ];
-
-            ordersList.forEach(order => {
-                let row = orderTableBody.insertRow();
-                row.innerHTML = `<td>${order.id}</td><td>${order.destination}</td><td>${order.cargoWeight}</td><td style="color: #CCFF00;">In Transit</td>`;
-            });
-        }
-
-        window.onload = loadDashboardData;
+        window.onload = fetchLiveSheetData;
     </script>
 </body>
 </html>
