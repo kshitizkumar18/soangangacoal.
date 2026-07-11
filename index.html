@@ -20,6 +20,9 @@
         .stat-card { background-color: #1A2026; border: 1px solid #2C353F; border-radius: 8px; padding: 20px; text-align: center; }
         .stat-number { font-size: 2rem; font-weight: bold; color: #CCFF00; }
         .stat-label { font-size: 0.85rem; text-transform: uppercase; color: #90A4AE; }
+        table { width: 100%; border-collapse: collapse; background-color: #1A2026; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #2C353F; }
+        th { background-color: #12161A; color: #FF5E00; text-transform: uppercase; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -61,28 +64,50 @@
                 <div class="stat-label">Security Guards</div>
             </div>
         </div>
+
+        <h2>Active Orders & Material Weight</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID / Slip No.</th>
+                    <th>Destination / Client</th>
+                    <th>Total Weight</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="order-table-body">
+                <tr>
+                    <td id="display-orderid">...</td>
+                    <td id="display-dest">...</td>
+                    <td id="display-weight">...</td>
+                    <td style="color: #CCFF00;">In Transit</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script>
-        // ⚠️ APNI GOOGLE SHEET ID YAHAN PASTE KAREIN
-        const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE'; 
-        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+        const SHEET_ID = '1BRRdTT4vjZDFlta_kWGCQZLVe29I0ggWWd3TmqWYTu4'; 
+        const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv`;
 
         async function fetchLiveSheetData() {
             try {
-                const response = await fetch(SHEET_URL);
-                const text = await response.text();
-                // Google Sheet ka JSON data clean karne ke liye
-                const jsonData = JSON.parse(text.substr(47).slice(0, -2));
-                const rows = const SHEET_ID = '1BRRdTT4vjZDFlta_kWGCQZLVe29I0ggWWd3TmqWYTu4';
-                // Data ko website par load karne ka logic
+                const response = await fetch(CSV_URL);
+                const data = await response.text();
+                
+                let lines = data.split("\n");
                 let dataMap = {};
-                rows.forEach(row => {
-                    if (row.c[0] && row.c[1]) {
-                        dataMap[row.c[0].v.toLowerCase().trim()] = row.c[1].v;
+                
+                lines.forEach(line => {
+                    let parts = line.split(",");
+                    if(parts[0] && parts[1]) {
+                        let key = parts[0].replace(/"/g, "").toLowerCase().trim();
+                        let val = parts[1].replace(/"/g, "").trim();
+                        dataMap[key] = val;
                     }
                 });
 
+                // Stats Dashboard Data
                 document.getElementById('display-owner').innerText = dataMap['owner'] || 'N/A';
                 document.getElementById('display-coowner').innerText = dataMap['coowner'] || 'N/A';
                 document.getElementById('display-trucks').innerText = dataMap['trucks'] || '0';
@@ -90,8 +115,13 @@
                 document.getElementById('display-revenue').innerText = dataMap['revenue'] || '₹0';
                 document.getElementById('display-guards').innerText = dataMap['guards'] || '0';
 
+                // Orders Table Data
+                document.getElementById('display-orderid').innerText = dataMap['orderid'] || 'N/A';
+                document.getElementById('display-dest').innerText = dataMap['destination'] || 'N/A';
+                document.getElementById('display-weight').innerText = dataMap['weight'] || 'N/A';
+
             } catch (error) {
-                console.error("Error loading data from Google Sheet:", error);
+                console.error("Error loading data:", error);
             }
         }
 
