@@ -89,8 +89,7 @@
     <script>
         // Ye naya system bina publish kiye bhi data nikal leta hai
         const SHEET_ID = '1BRRdTT4vjZDFlta_kWGCQZLVe29I0ggWWd3TmqWYTu4'; 
-        const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
-
+       const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=0`;
         async function fetchLiveSheetData() {
             try {
                 const response = await fetch(URL);
